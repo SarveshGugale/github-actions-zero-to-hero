@@ -19,6 +19,17 @@ jobs:
         - name: collage of user
           run: echo "Shivaji University,kolhaur"
           
+   Graduation:
+     runs-on: ubuntu-latest
+     steps:
+        - name: Institute Name
+          run: echo "Sharad Institute Of Technology"
+        - name: Joinig date
+          run: echo "15-March-2016" 
+        - name: Completed date
+          run: echo "20-April-2020"  
+          
+          
       
       
    
