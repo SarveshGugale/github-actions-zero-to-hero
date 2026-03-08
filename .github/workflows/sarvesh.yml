@@ -12,5 +12,13 @@ jobs:
      runs-on: ubuntu-latest
      steps:
         - name: say hello to users
-          run: echo "Hello Sarvesh"
+          run: echo "Hello Sarvesh"      
+   Details: 
+     runs-on: ubuntu-latest
+     steps:
+        - name: collage of user
+          run: echo "Shivaji University,kolhaur"
+          
       
+      
+   
