@@ -3,7 +3,17 @@ name: CICD
 
 # manual click whenever user needs 
 on:
- workflow_dispatch: 
+  workflow_dispatch:
+    inputs:
+      enviroment:
+        description: This is the enviroment value where this workflow runs
+        default: 'dev'
+        required: true
+        type: choice
+        options:
+          - dev
+          - stage
+          - prod
 jobs:
   code:
    runs-on: ubuntu-latest
