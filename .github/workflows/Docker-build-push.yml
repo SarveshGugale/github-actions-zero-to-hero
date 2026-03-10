@@ -23,4 +23,4 @@ jobs:
               with: 
                 context: .
                 push: true
-                tags: sarveshgugale/app:latest
+                tags: sarvesh01234/app:latest
