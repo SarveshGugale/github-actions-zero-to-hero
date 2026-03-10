@@ -8,8 +8,6 @@
 
 <style>
 
-/* GENERAL */
-
 *{
 margin:0;
 padding:0;
@@ -64,7 +62,7 @@ font-size:26px;
 cursor:pointer;
 }
 
-/* HERO VIDEO */
+/* HERO */
 
 .hero{
 height:100vh;
@@ -79,6 +77,14 @@ height:100%;
 object-fit:cover;
 }
 
+.hero::after{
+content:"";
+position:absolute;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.45);
+}
+
 .hero-content{
 position:absolute;
 top:50%;
@@ -86,20 +92,23 @@ left:50%;
 transform:translate(-50%,-50%);
 color:white;
 text-align:center;
-
-background:rgba(255,255,255,0.15);
-backdrop-filter:blur(10px);
-
-padding:40px;
-border-radius:15px;
+z-index:2;
 }
 
-.hero-content h1{
-font-size:50px;
-margin-bottom:20px;
+.main-title{
+font-size:70px;
+font-weight:900;
+letter-spacing:3px;
+text-shadow:4px 4px 15px rgba(0,0,0,0.9);
 }
 
-/* SECTION */
+.sub-title{
+font-size:26px;
+font-weight:bold;
+margin-top:10px;
+}
+
+/* SECTIONS */
 
 section{
 padding:100px 80px;
@@ -130,7 +139,8 @@ transition:0.4s;
 }
 
 .card:hover{
-transform:translateY(-10px);
+transform:translateY(-10px) scale(1.03);
+box-shadow:0 15px 30px rgba(0,0,0,0.3);
 }
 
 .card img{
@@ -141,9 +151,10 @@ object-fit:cover;
 
 .card-content{
 padding:20px;
+text-align:center;
 }
 
-/* IMAGE SLIDER */
+/* SLIDER */
 
 .slider{
 width:80%;
@@ -232,14 +243,16 @@ section{
 padding:80px 20px;
 }
 
+.main-title{
+font-size:40px;
+}
+
 }
 
 </style>
 </head>
 
 <body>
-
-<!-- NAVBAR -->
 
 <nav>
 
@@ -250,6 +263,7 @@ padding:80px 20px;
 <ul id="nav-menu">
 <li><a href="#home">Home</a></li>
 <li><a href="#cities">Cities</a></li>
+<li><a href="#stadiums">Stadiums</a></li>
 <li><a href="#colleges">Colleges</a></li>
 <li><a href="#cafes">Cafes</a></li>
 <li><a href="#map">Map</a></li>
@@ -260,22 +274,18 @@ padding:80px 20px;
 
 </nav>
 
-<!-- HERO -->
-
 <section class="hero" id="home">
 
 <video autoplay muted loop>
-<source src="https://cdn.coverr.co/videos/coverr-london-cityscape-5175/1080p.mp4">
+<source src="https://cdn.coverr.co/videos/coverr-london-cityscape-5175/1080p.mp4" type="video/mp4">
 </video>
 
 <div class="hero-content">
-<h1>Explore Europe Tourism</h1>
-<p>Discover the beauty of London, Paris, Rome & Barcelona</p>
+<h1 class="main-title">Explore Europe Tourism</h1>
+<p class="sub-title">Discover the beauty of London, Paris, Rome & Barcelona</p>
 </div>
 
 </section>
-
-<!-- IMAGE SLIDER -->
 
 <section>
 
@@ -287,117 +297,43 @@ padding:80px 20px;
 
 </section>
 
-<!-- CITIES -->
-
 <section id="cities">
 
-<h2 class="section-title">Famous Cities</h2>
+<h2 class="section-title">Top European Cities</h2>
 
 <div class="grid">
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad">
-<div class="card-content">
-<h3>London</h3>
-<p>Big Ben, Tower Bridge, Buckingham Palace</p>
-</div>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34">
-<div class="card-content">
-<h3>Paris</h3>
-<p>Eiffel Tower, Louvre Museum</p>
-</div>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1529260830199-42c24126f198">
-<div class="card-content">
-<h3>Rome</h3>
-<p>Colosseum, Roman Forum</p>
-</div>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1509840841025-9088ba78a826">
-<div class="card-content">
-<h3>Barcelona</h3>
-<p>Sagrada Familia and Park Güell</p>
-</div>
-</div>
+<div class="card"><img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34"><div class="card-content"><h3>Paris</h3></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad"><div class="card-content"><h3>London</h3></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1529260830199-42c24126f198"><div class="card-content"><h3>Rome</h3></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1509840841025-9088ba78a826"><div class="card-content"><h3>Barcelona</h3></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1505761671935-60b3a7427bad"><div class="card-content"><h3>Amsterdam</h3></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1508057198894-247b23fe5ade"><div class="card-content"><h3>Berlin</h3></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1549893075-7b5b51c9a93c"><div class="card-content"><h3>Vienna</h3></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1505764706515-aa95265c5abc"><div class="card-content"><h3>Prague</h3></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1528909514045-2fa4ac7a08ba"><div class="card-content"><h3>Budapest</h3></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1471623817296-6f3fa1d9c3c4"><div class="card-content"><h3>Zurich</h3></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1531572753322-ad063cecc140"><div class="card-content"><h3>Venice</h3></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1533105079780-92b9be482077"><div class="card-content"><h3>Florence</h3></div></div>
 
 </div>
 
 </section>
 
-<!-- COLLEGES -->
+<section id="stadiums">
 
-<section id="colleges">
-
-<h2 class="section-title">Top Universities</h2>
+<h2 class="section-title">Famous Football Stadiums</h2>
 
 <div class="grid">
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1562774053-701939374585">
-<div class="card-content">
-<h3>University College London</h3>
-</div>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1596495578065-6e0763fa1178">
-<div class="card-content">
-<h3>Sorbonne University</h3>
-</div>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b">
-<div class="card-content">
-<h3>Sapienza University</h3>
-</div>
-</div>
+<div class="card"><img src="https://images.unsplash.com/photo-1508098682722-e99c643e7f0b"><div class="card-content"><h3>Camp Nou</h3></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20"><div class="card-content"><h3>Wembley Stadium</h3></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1546519638-68e109498ffc"><div class="card-content"><h3>San Siro</h3></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1508098682722-e99c643e7f0b"><div class="card-content"><h3>Allianz Arena</h3></div></div>
 
 </div>
 
 </section>
-
-<!-- CAFES -->
-
-<section id="cafes">
-
-<h2 class="section-title">Popular Cafes</h2>
-
-<div class="grid">
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93">
-<div class="card-content">
-<h3>Cafe de Flore</h3>
-</div>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24">
-<div class="card-content">
-<h3>Sketch Cafe</h3>
-</div>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085">
-<div class="card-content">
-<h3>Sant Eustachio Cafe</h3>
-</div>
-</div>
-
-</div>
-
-</section>
-
-<!-- MAP -->
 
 <section id="map" class="map">
 
@@ -406,8 +342,6 @@ padding:80px 20px;
 <iframe src="https://maps.google.com/maps?q=europe&t=&z=4&ie=UTF8&iwloc=&output=embed"></iframe>
 
 </section>
-
-<!-- CONTACT -->
 
 <section id="contact" class="contact">
 
@@ -421,31 +355,22 @@ padding:80px 20px;
 
 </section>
 
-<!-- FOOTER -->
-
 <footer>
 
 <p>© 2026 Explore Europe Tourism</p>
-
 <p>Instagram | Twitter | Facebook</p>
 
 </footer>
 
 <script>
 
-/* MOBILE MENU */
-
 function toggleMenu(){
 document.getElementById("nav-menu").classList.toggle("active");
 }
 
-/* DARK MODE */
-
 function toggleDarkMode(){
 document.body.classList.toggle("dark-mode");
 }
-
-/* IMAGE SLIDER */
 
 const images=[
 "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad",
