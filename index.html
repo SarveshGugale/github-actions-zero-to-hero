@@ -1,62 +1,648 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple-Portfolio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VOID STUDIO — Creative Direction</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #0a0a0a;
+      --paper: #f0ece3;
+      --rust: #c94e2f;
+      --slate: #2b2d42;
+      --fog: #b8b4a8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--ink);
+      color: var(--paper);
+      font-family: 'Space Mono', monospace;
+      cursor: none;
+      overflow-x: hidden;
+    }
+
+    /* Custom cursor */
+    #cursor {
+      position: fixed;
+      width: 12px; height: 12px;
+      background: var(--rust);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease, width 0.2s ease, height 0.2s ease;
+      mix-blend-mode: difference;
+    }
+    #cursor.expand { width: 48px; height: 48px; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.8rem 3rem;
+      z-index: 100;
+      mix-blend-mode: difference;
+    }
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.15em;
+      color: var(--paper);
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--fog);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--rust); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 0 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 6rem;
+    }
+
+    .hero-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.3s;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 10vw, 11rem);
+      line-height: 0.92;
+      letter-spacing: -0.01em;
+      color: var(--paper);
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.5s;
+    }
+
+    .hero-title em {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      color: var(--rust);
+    }
+
+    .hero-sub {
+      margin-top: 2.5rem;
+      font-size: 0.72rem;
+      line-height: 1.9;
+      color: var(--fog);
+      max-width: 340px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.75s;
+    }
+
+    .hero-cta {
+      margin-top: 3rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--paper);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rust);
+      padding-bottom: 0.4rem;
+      transition: gap 0.3s ease, color 0.2s;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 1s;
+    }
+    .hero-cta:hover { gap: 1.8rem; color: var(--rust); }
+
+    .hero-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .hero-graphic {
+      width: 420px; height: 420px;
+      position: relative;
+      opacity: 0;
+      animation: scaleIn 1.2s ease forwards 0.6s;
+    }
+
+    .circle-outer {
+      position: absolute; inset: 0;
+      border: 1px solid rgba(240,236,227,0.12);
+      border-radius: 50%;
+      animation: spin 20s linear infinite;
+    }
+    .circle-mid {
+      position: absolute; inset: 40px;
+      border: 1px solid rgba(201,78,47,0.2);
+      border-radius: 50%;
+      animation: spin 14s linear infinite reverse;
+    }
+    .circle-inner {
+      position: absolute; inset: 100px;
+      border: 1px dashed rgba(240,236,227,0.25);
+      border-radius: 50%;
+      animation: spin 8s linear infinite;
+    }
+
+    .hero-num {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 7rem;
+      color: rgba(240,236,227,0.06);
+      letter-spacing: -0.05em;
+    }
+
+    .dot {
+      position: absolute;
+      width: 8px; height: 8px;
+      background: var(--rust);
+      border-radius: 50%;
+    }
+    .dot:nth-child(1) { top: 0; left: 50%; transform: translateX(-50%); }
+    .dot:nth-child(2) { bottom: 0; left: 50%; transform: translateX(-50%); }
+    .dot:nth-child(3) { left: 0; top: 50%; transform: translateY(-50%); }
+    .dot:nth-child(4) { right: 0; top: 50%; transform: translateY(-50%); }
+
+    /* TICKER */
+    .ticker-wrap {
+      overflow: hidden;
+      border-top: 1px solid rgba(240,236,227,0.1);
+      border-bottom: 1px solid rgba(240,236,227,0.1);
+      padding: 1.1rem 0;
+      background: transparent;
+    }
+    .ticker {
+      display: flex;
+      gap: 4rem;
+      animation: ticker 18s linear infinite;
+      white-space: nowrap;
+    }
+    .ticker span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      color: var(--fog);
+    }
+    .ticker span.accent { color: var(--rust); }
+
+    /* WORK GRID */
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 1rem;
+    }
+    .work {
+      padding: 8rem 3rem;
+    }
+    .work-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 4rem;
+    }
+    .work-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 6vw, 6rem);
+      line-height: 1;
+      letter-spacing: -0.01em;
+    }
+    .work-title em {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      color: var(--rust);
+    }
+    .view-all {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--fog);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(184,180,168,0.3);
+      padding-bottom: 0.3rem;
+      transition: color 0.2s;
+    }
+    .view-all:hover { color: var(--paper); }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+    }
+
+    .project {
+      position: relative;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      background: var(--slate);
+    }
+
+    .project:nth-child(1) { background: #1a1614; }
+    .project:nth-child(2) { background: #141a16; aspect-ratio: 3/5; margin-top: -3rem; }
+    .project:nth-child(3) { background: #14161a; }
+
+    .project-bg {
+      position: absolute; inset: 0;
+      transition: transform 0.7s ease;
+    }
+    .project:hover .project-bg { transform: scale(1.05); }
+
+    /* Generative backgrounds */
+    .project:nth-child(1) .project-bg {
+      background: radial-gradient(ellipse at 30% 70%, #c94e2f22 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 20%, #2b2d4244 0%, transparent 50%);
+    }
+    .project:nth-child(2) .project-bg {
+      background: radial-gradient(ellipse at 60% 40%, #c94e2f18 0%, transparent 60%),
+                  linear-gradient(135deg, #1e1e1e 0%, #141a16 100%);
+    }
+    .project:nth-child(3) .project-bg {
+      background: radial-gradient(ellipse at 40% 60%, #2b2d4255 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 30%, #c94e2f15 0%, transparent 50%);
+    }
+
+    .project-lines {
+      position: absolute; inset: 0;
+      opacity: 0.07;
+      background-image: repeating-linear-gradient(0deg, var(--paper) 0px, var(--paper) 1px, transparent 1px, transparent 40px);
+    }
+
+    .project-info {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 2rem;
+      background: linear-gradient(transparent, rgba(10,10,10,0.9));
+      transform: translateY(60%);
+      transition: transform 0.5s ease;
+    }
+    .project:hover .project-info { transform: translateY(0); }
+
+    .project-num {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--rust);
+      margin-bottom: 0.5rem;
+    }
+    .project-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    .project-type {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--fog);
+    }
+
+    .project-hover-tag {
+      position: absolute;
+      top: 1.5rem; right: 1.5rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--paper);
+      background: var(--rust);
+      padding: 0.3rem 0.7rem;
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .project:hover .project-hover-tag { opacity: 1; transform: translateY(0); }
+
+    /* ABOUT STRIP */
+    .about {
+      padding: 8rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8rem;
+      border-top: 1px solid rgba(240,236,227,0.08);
+    }
+    .about-left {}
+    .about-big {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.2rem, 4vw, 4rem);
+      line-height: 1.2;
+      color: var(--paper);
+      margin-bottom: 2rem;
+    }
+    .about-big em { font-style: italic; color: var(--rust); }
+
+    .about-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .about-body {
+      font-size: 0.72rem;
+      line-height: 2;
+      color: var(--fog);
+      margin-bottom: 3rem;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      border-top: 1px solid rgba(240,236,227,0.1);
+      padding-top: 2.5rem;
+    }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: var(--rust);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .stat-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--fog);
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 5rem 3rem 3rem;
+      border-top: 1px solid rgba(240,236,227,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 4rem;
+      letter-spacing: 0.1em;
+      color: rgba(240,236,227,0.06);
+      line-height: 1;
+    }
+    .footer-right {
+      text-align: right;
+    }
+    .footer-contact {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--fog);
+      margin-bottom: 0.5rem;
+    }
+    .footer-email {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.05em;
+      color: var(--rust);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-email:hover { color: var(--paper); }
+    .footer-copy {
+      margin-top: 1rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(184,180,168,0.4);
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.85); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .projects { grid-template-columns: 1fr; }
+      .project:nth-child(2) { margin-top: 0; aspect-ratio: 3/4; }
+      .about { grid-template-columns: 1fr; gap: 3rem; }
+      nav { padding: 1.5rem 1.5rem; }
+      .hero { padding: 0 1.5rem; }
+      .work, .about { padding: 5rem 1.5rem; }
+      footer { padding: 3rem 1.5rem; flex-direction: column; align-items: flex-start; gap: 2rem; }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Header and Navigation -->
-    <header>
-        <h1>Sarvesh Gugale h1 b1 visa USA UK </h1>
-        <nav>
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+  <div id="cursor"></div>
 
-    <main>
-        <!-- About Me Section -->
-        <section id="about">
-            <h2>About Me</h2>
-            <p>Write a brief introduction about yourself, your skills, and what you do.</p>
-        </section>
+  <nav>
+    <div class="logo">VOID</div>
+    <ul class="nav-links">
+      <li><a href="#">Work</a></li>
+      <li><a href="#">Studio</a></li>
+      <li><a href="#">Process</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
 
-        <!-- Projects Section -->
-        <section id="projects">
-            <h2>Projects</h2>
-            <ul>
-                <li>
-                    <h3>Project 1</h3>
-                    <p>Description of your first project. Link to the source code or live demo.</p>
-                </li>
-                <li>
-                    <h3>Project 2</h3>
-                    <p>Description of your second project.</p>
-                </li>
-            </ul>
-        </section>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-tag">Creative Direction — Est. 2019</p>
+      <h1 class="hero-title">
+        We make<br/>
+        <em>bold</em><br/>
+        things
+      </h1>
+      <p class="hero-sub">
+        A creative studio obsessed with the tension between order and chaos. 
+        We build brands, campaigns, and experiences that refuse to be ignored.
+      </p>
+      <a href="#work" class="hero-cta">
+        View Selected Work
+        <span>→</span>
+      </a>
+    </div>
+    <div class="hero-right">
+      <div class="hero-graphic">
+        <div class="circle-outer"></div>
+        <div class="circle-mid"></div>
+        <div class="circle-inner"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <span class="hero-num">VII</span>
+      </div>
+    </div>
+  </section>
 
-        <!-- Contact Section -->
-        <section id="contact">
-            <h2>Contact</h2>
-            <p>You can reach me via email at your.email@example.com or find me on social media.</p>
-            <p>
-                <!-- Example links to social media (replace with your actual links) -->
-                <a href="https://github.com">GitHub</a> | 
-                <a href="https://linkedin.com">LinkedIn</a>
-            </p>
-        </section>
-    </main>
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span>Brand Identity</span><span class="accent">✦</span>
+      <span>Art Direction</span><span class="accent">✦</span>
+      <span>Motion Design</span><span class="accent">✦</span>
+      <span>Digital Campaigns</span><span class="accent">✦</span>
+      <span>Editorial Design</span><span class="accent">✦</span>
+      <span>Brand Identity</span><span class="accent">✦</span>
+      <span>Art Direction</span><span class="accent">✦</span>
+      <span>Motion Design</span><span class="accent">✦</span>
+      <span>Digital Campaigns</span><span class="accent">✦</span>
+      <span>Editorial Design</span><span class="accent">✦</span>
+    </div>
+  </div>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 Your Name. All rights reserved.</p>
-    </footer>
+  <!-- WORK -->
+  <section class="work" id="work">
+    <div class="work-header">
+      <div>
+        <p class="section-label">Selected Work</p>
+        <h2 class="work-title">Recent <em>Projects</em></h2>
+      </div>
+      <a href="#" class="view-all">View All →</a>
+    </div>
+    <div class="projects">
 
+      <div class="project">
+        <div class="project-bg"></div>
+        <div class="project-lines"></div>
+        <span class="project-hover-tag">2025</span>
+        <div class="project-info">
+          <p class="project-num">001</p>
+          <h3 class="project-name">NOCTURNE</h3>
+          <p class="project-type">Brand Identity · Packaging</p>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-bg"></div>
+        <div class="project-lines"></div>
+        <span class="project-hover-tag">2024</span>
+        <div class="project-info">
+          <p class="project-num">002</p>
+          <h3 class="project-name">FORMA</h3>
+          <p class="project-type">Digital Campaign · Motion</p>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-bg"></div>
+        <div class="project-lines"></div>
+        <span class="project-hover-tag">2024</span>
+        <div class="project-info">
+          <p class="project-num">003</p>
+          <h3 class="project-name">MERIDIAN</h3>
+          <p class="project-type">Art Direction · Editorial</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about">
+    <div class="about-left">
+      <p class="section-label">The Studio</p>
+      <h2 class="about-big">
+        Design that<br/>
+        <em>earns</em><br/>
+        attention
+      </h2>
+    </div>
+    <div class="about-right">
+      <p class="about-body">
+        We are a small, focused studio operating at the intersection of 
+        strategy and craft. Every project starts with a single question: 
+        what would make this impossible to ignore?<br/><br/>
+        We work with challengers, founders, and brands ready to move 
+        beyond the expected. Our process is direct. Our work is not.
+      </p>
+      <div class="stats">
+        <div>
+          <div class="stat-num">87</div>
+          <div class="stat-label">Projects shipped</div>
+        </div>
+        <div>
+          <div class="stat-num">31</div>
+          <div class="stat-label">Clients worldwide</div>
+        </div>
+        <div>
+          <div class="stat-num">6</div>
+          <div class="stat-label">Years running</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">VOID</div>
+    <div class="footer-right">
+      <p class="footer-contact">Ready to make something bold?</p>
+      <a href="mailto:hello@voidstudio.co" class="footer-email">hello@voidstudio.co</a>
+      <p class="footer-copy">© 2026 VOID Studio. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+    document.querySelectorAll('a, .project').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('expand'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('expand'));
+    });
+
+    // Scroll-triggered fade-in for sections
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.project, .stat-num, .about-big').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+      el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+      observer.observe(el);
+    });
+  </script>
 </body>
 </html>
