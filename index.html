@@ -1,647 +1,363 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VOID STUDIO — Creative Direction</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet"/>
+  <title>SOLSTICE FEST 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Unbounded:wght@400;700;900&family=Kalam:wght@300&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --ink: #0a0a0a;
-      --paper: #f0ece3;
-      --rust: #c94e2f;
-      --slate: #2b2d42;
-      --fog: #b8b4a8;
+      --lime: #c8ff00;
+      --hot: #ff2d6b;
+      --sky: #00d4ff;
+      --night: #06040f;
+      --deep: #100c1e;
+      --muted: #6b5f8a;
     }
-
     html { scroll-behavior: smooth; }
+    body { background: var(--night); color: #fff; font-family: 'Unbounded', sans-serif; overflow-x: hidden; }
 
-    body {
-      background: var(--ink);
-      color: var(--paper);
-      font-family: 'Space Mono', monospace;
-      cursor: none;
-      overflow-x: hidden;
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 1000; opacity: 0.4;
     }
 
-    /* Custom cursor */
-    #cursor {
-      position: fixed;
-      width: 12px; height: 12px;
-      background: var(--rust);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: transform 0.1s ease, width 0.2s ease, height 0.2s ease;
-      mix-blend-mode: difference;
-    }
-    #cursor.expand { width: 48px; height: 48px; }
-
-    /* NAV */
     nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 1.8rem 3rem;
-      z-index: 100;
-      mix-blend-mode: difference;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.4rem 3rem;
+      backdrop-filter: blur(12px);
+      background: rgba(6,4,15,0.6);
+      border-bottom: 1px solid rgba(200,255,0,0.08);
     }
-    .logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.6rem;
-      letter-spacing: 0.15em;
-      color: var(--paper);
-    }
+    .nav-logo { font-family: 'Righteous', sans-serif; font-size: 1.3rem; letter-spacing: 0.1em; color: var(--lime); }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-    .nav-links a {
-      font-size: 0.7rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--fog);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--rust); }
+    .nav-links a { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--lime); }
+    .nav-btn { font-family: 'Unbounded', sans-serif; font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.6rem 1.4rem; background: var(--lime); color: var(--night); border: none; cursor: pointer; font-weight: 700; transition: background 0.2s, transform 0.1s; }
+    .nav-btn:hover { background: #d8ff33; transform: scale(1.03); }
 
-    /* HERO */
     .hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      padding: 0 3rem;
-      position: relative;
-      overflow: hidden;
+      min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 8rem 2rem 4rem; position: relative; overflow: hidden;
     }
+    .orb { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; }
+    .orb-1 { width: 600px; height: 600px; background: rgba(200,255,0,0.12); top: -100px; left: -150px; animation: drift 12s ease-in-out infinite alternate; }
+    .orb-2 { width: 500px; height: 500px; background: rgba(255,45,107,0.14); bottom: -80px; right: -100px; animation: drift 10s ease-in-out infinite alternate-reverse; }
+    .orb-3 { width: 400px; height: 400px; background: rgba(0,212,255,0.1); top: 40%; left: 50%; transform: translate(-50%,-50%); animation: drift 8s ease-in-out infinite alternate; }
 
-    .hero-left {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding-bottom: 6rem;
-    }
+    .hero-date { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--lime); margin-bottom: 2rem; opacity: 0; animation: popIn 0.6s cubic-bezier(0.175,0.885,0.32,1.275) forwards 0.2s; }
+    .hero-title { font-family: 'Unbounded', sans-serif; font-size: clamp(3.5rem, 12vw, 13rem); font-weight: 900; line-height: 0.88; letter-spacing: -0.03em; margin-bottom: 0.5rem; opacity: 0; animation: popIn 0.8s cubic-bezier(0.175,0.885,0.32,1.275) forwards 0.4s; }
+    .hero-title .line-1 { color: #fff; display: block; }
+    .hero-title .line-2 { display: block; -webkit-text-stroke: 2px var(--lime); color: transparent; }
+    .hero-sub-row { display: flex; align-items: center; gap: 2rem; margin: 2.5rem 0; opacity: 0; animation: popIn 0.7s cubic-bezier(0.175,0.885,0.32,1.275) forwards 0.65s; }
+    .hero-sub-row .divider { width: 60px; height: 1px; background: var(--muted); }
+    .hero-location { font-family: 'Kalam', cursive; font-size: 1.1rem; color: rgba(255,255,255,0.6); }
+    .hero-location span { color: var(--sky); }
+    .hero-acts { font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 3.5rem; opacity: 0; animation: popIn 0.7s cubic-bezier(0.175,0.885,0.32,1.275) forwards 0.85s; }
+    .hero-actions { display: flex; gap: 1rem; align-items: center; opacity: 0; animation: popIn 0.7s cubic-bezier(0.175,0.885,0.32,1.275) forwards 1.05s; }
 
-    .hero-tag {
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--rust);
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards 0.3s;
-    }
+    .btn-primary { font-family: 'Unbounded', sans-serif; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 1rem 2.5rem; background: var(--lime); color: var(--night); border: none; cursor: pointer; position: relative; overflow: hidden; transition: transform 0.15s; }
+    .btn-primary::after { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.25); transform: translateX(-100%); transition: transform 0.3s ease; }
+    .btn-primary:hover::after { transform: translateX(0); }
+    .btn-primary:hover { transform: scale(1.04); }
+    .btn-secondary { font-family: 'Unbounded', sans-serif; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 1rem 2.5rem; background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.25); cursor: pointer; transition: border-color 0.2s, color 0.2s; }
+    .btn-secondary:hover { border-color: var(--sky); color: var(--sky); }
 
-    .hero-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(5rem, 10vw, 11rem);
-      line-height: 0.92;
-      letter-spacing: -0.01em;
-      color: var(--paper);
-      opacity: 0;
-      animation: fadeUp 0.9s ease forwards 0.5s;
-    }
+    .scroll-hint { position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; opacity: 0.4; animation: bounce 2s ease-in-out infinite; }
+    .scroll-hint span { font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase; }
+    .scroll-arrow { width: 1px; height: 40px; background: linear-gradient(var(--lime), transparent); }
 
-    .hero-title em {
-      font-family: 'DM Serif Display', serif;
-      font-style: italic;
-      color: var(--rust);
-    }
+    .countdown-bar { background: var(--deep); border-top: 1px solid rgba(200,255,0,0.1); border-bottom: 1px solid rgba(200,255,0,0.1); padding: 2.5rem 3rem; display: flex; align-items: center; justify-content: center; gap: 4rem; }
+    .countdown-label { font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-right: 2rem; }
+    .cd-block { text-align: center; }
+    .cd-num { font-family: 'Righteous', sans-serif; font-size: 3rem; color: var(--lime); line-height: 1; display: block; }
+    .cd-unit { font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-top: 0.3rem; display: block; }
+    .cd-sep { font-family: 'Righteous', sans-serif; font-size: 3rem; color: rgba(200,255,0,0.2); padding-bottom: 1rem; }
 
-    .hero-sub {
-      margin-top: 2.5rem;
-      font-size: 0.72rem;
-      line-height: 1.9;
-      color: var(--fog);
-      max-width: 340px;
-      opacity: 0;
-      animation: fadeUp 0.9s ease forwards 0.75s;
-    }
+    .lineup { padding: 8rem 3rem; }
+    .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 5rem; }
+    .section-eyebrow { font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--hot); margin-bottom: 0.8rem; }
+    .section-title { font-size: clamp(2rem, 5vw, 4.5rem); font-weight: 900; line-height: 1; }
+    .stage-tabs { display: flex; gap: 0.5rem; }
+    .tab { font-family: 'Unbounded', sans-serif; font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.6rem 1.2rem; background: transparent; color: var(--muted); border: 1px solid rgba(107,95,138,0.3); cursor: pointer; transition: all 0.2s; }
+    .tab.active, .tab:hover { background: var(--hot); color: #fff; border-color: var(--hot); }
 
-    .hero-cta {
-      margin-top: 3rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 1rem;
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--paper);
-      text-decoration: none;
-      border-bottom: 1px solid var(--rust);
-      padding-bottom: 0.4rem;
-      transition: gap 0.3s ease, color 0.2s;
-      opacity: 0;
-      animation: fadeUp 0.9s ease forwards 1s;
-    }
-    .hero-cta:hover { gap: 1.8rem; color: var(--rust); }
+    .acts-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(255,255,255,0.04); }
+    .act { background: var(--deep); padding: 2.5rem 2rem; position: relative; overflow: hidden; transition: background 0.3s; cursor: pointer; }
+    .act::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--lime); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
+    .act:hover::before { transform: scaleX(1); }
+    .act:hover { background: #130f25; }
+    .act-time { font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sky); margin-bottom: 1.2rem; }
+    .act-name { font-family: 'Righteous', sans-serif; font-size: 1.5rem; color: #fff; margin-bottom: 0.5rem; transition: color 0.2s; }
+    .act:hover .act-name { color: var(--lime); }
+    .act-genre { font-size: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+    .act-headliner { grid-column: span 2; padding: 3.5rem 3rem; background: linear-gradient(135deg, #130f25, #1a0a1a); }
+    .act-headliner .act-name { font-size: 2.8rem; }
+    .headliner-tag { display: inline-block; font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.3rem 0.7rem; background: var(--hot); color: #fff; margin-bottom: 1rem; }
 
-    .hero-right {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
+    .location-section { padding: 8rem 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; border-top: 1px solid rgba(255,255,255,0.05); }
+    .location-map { aspect-ratio: 1; background: var(--deep); position: relative; overflow: hidden; }
+    .map-svg { width: 100%; height: 100%; opacity: 0.6; }
+    .map-pin { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    .pin-dot { width: 16px; height: 16px; background: var(--hot); border-radius: 50%; position: relative; }
+    .pin-dot::after { content: ''; position: absolute; inset: -6px; border: 2px solid var(--hot); border-radius: 50%; animation: ping 1.5s ease-out infinite; }
+    .map-label { position: absolute; top: 50%; left: calc(50% + 20px); transform: translateY(-50%); background: var(--hot); padding: 0.3rem 0.8rem; font-size: 0.55rem; letter-spacing: 0.1em; white-space: nowrap; }
+    .location-detail { font-size: 0.65rem; line-height: 2; color: rgba(255,255,255,0.5); margin-bottom: 3rem; }
+    .location-detail strong { color: #fff; }
+    .info-pills { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .pill { font-size: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.5rem 1rem; border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); transition: all 0.2s; }
+    .pill:hover { border-color: var(--lime); color: var(--lime); }
 
-    .hero-graphic {
-      width: 420px; height: 420px;
-      position: relative;
-      opacity: 0;
-      animation: scaleIn 1.2s ease forwards 0.6s;
-    }
+    .ticket-cta { margin: 0 3rem 8rem; background: linear-gradient(135deg, #0d1a00, #001a1a); border: 1px solid rgba(200,255,0,0.15); padding: 6rem 5rem; display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; }
+    .ticket-cta::before { content: 'GET IN'; position: absolute; right: -2rem; top: 50%; transform: translateY(-50%); font-family: 'Unbounded', sans-serif; font-size: 14rem; font-weight: 900; color: rgba(200,255,0,0.03); pointer-events: none; white-space: nowrap; }
+    .ticket-title { font-size: clamp(2rem, 4vw, 4rem); font-weight: 900; line-height: 1.1; }
+    .ticket-title span { color: var(--lime); }
+    .ticket-prices { display: flex; flex-direction: column; gap: 1rem; align-items: flex-end; }
+    .price-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 1.5rem 2.5rem; min-width: 220px; text-align: right; transition: border-color 0.2s; cursor: pointer; }
+    .price-card:hover { border-color: var(--lime); }
+    .price-card.featured { border-color: var(--lime); background: rgba(200,255,0,0.05); }
+    .price-tier { font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
+    .price-amount { font-family: 'Righteous', sans-serif; font-size: 2rem; color: var(--lime); }
+    .price-desc { font-size: 0.5rem; color: rgba(255,255,255,0.3); margin-top: 0.2rem; }
 
-    .circle-outer {
-      position: absolute; inset: 0;
-      border: 1px solid rgba(240,236,227,0.12);
-      border-radius: 50%;
-      animation: spin 20s linear infinite;
-    }
-    .circle-mid {
-      position: absolute; inset: 40px;
-      border: 1px solid rgba(201,78,47,0.2);
-      border-radius: 50%;
-      animation: spin 14s linear infinite reverse;
-    }
-    .circle-inner {
-      position: absolute; inset: 100px;
-      border: 1px dashed rgba(240,236,227,0.25);
-      border-radius: 50%;
-      animation: spin 8s linear infinite;
-    }
+    footer { background: var(--deep); border-top: 1px solid rgba(255,255,255,0.05); padding: 4rem 3rem; display: flex; justify-content: space-between; align-items: center; }
+    .footer-brand { font-family: 'Righteous', sans-serif; font-size: 2rem; color: var(--lime); }
+    .footer-brand span { color: rgba(255,255,255,0.2); }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a { font-size: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--lime); }
+    .footer-copy { font-size: 0.5rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.15); }
 
-    .hero-num {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 7rem;
-      color: rgba(240,236,227,0.06);
-      letter-spacing: -0.05em;
-    }
+    @keyframes popIn { from { opacity: 0; transform: scale(0.92) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+    @keyframes drift { from { transform: translate(0,0) scale(1); } to { transform: translate(30px, 20px) scale(1.05); } }
+    @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+    @keyframes ping { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(2.5); opacity: 0; } }
 
-    .dot {
-      position: absolute;
-      width: 8px; height: 8px;
-      background: var(--rust);
-      border-radius: 50%;
-    }
-    .dot:nth-child(1) { top: 0; left: 50%; transform: translateX(-50%); }
-    .dot:nth-child(2) { bottom: 0; left: 50%; transform: translateX(-50%); }
-    .dot:nth-child(3) { left: 0; top: 50%; transform: translateY(-50%); }
-    .dot:nth-child(4) { right: 0; top: 50%; transform: translateY(-50%); }
-
-    /* TICKER */
-    .ticker-wrap {
-      overflow: hidden;
-      border-top: 1px solid rgba(240,236,227,0.1);
-      border-bottom: 1px solid rgba(240,236,227,0.1);
-      padding: 1.1rem 0;
-      background: transparent;
-    }
-    .ticker {
-      display: flex;
-      gap: 4rem;
-      animation: ticker 18s linear infinite;
-      white-space: nowrap;
-    }
-    .ticker span {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.1rem;
-      letter-spacing: 0.12em;
-      color: var(--fog);
-    }
-    .ticker span.accent { color: var(--rust); }
-
-    /* WORK GRID */
-    .section-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--rust);
-      margin-bottom: 1rem;
-    }
-    .work {
-      padding: 8rem 3rem;
-    }
-    .work-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 4rem;
-    }
-    .work-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(3rem, 6vw, 6rem);
-      line-height: 1;
-      letter-spacing: -0.01em;
-    }
-    .work-title em {
-      font-family: 'DM Serif Display', serif;
-      font-style: italic;
-      color: var(--rust);
-    }
-    .view-all {
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--fog);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(184,180,168,0.3);
-      padding-bottom: 0.3rem;
-      transition: color 0.2s;
-    }
-    .view-all:hover { color: var(--paper); }
-
-    .projects {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5px;
-    }
-
-    .project {
-      position: relative;
-      aspect-ratio: 3/4;
-      overflow: hidden;
-      background: var(--slate);
-    }
-
-    .project:nth-child(1) { background: #1a1614; }
-    .project:nth-child(2) { background: #141a16; aspect-ratio: 3/5; margin-top: -3rem; }
-    .project:nth-child(3) { background: #14161a; }
-
-    .project-bg {
-      position: absolute; inset: 0;
-      transition: transform 0.7s ease;
-    }
-    .project:hover .project-bg { transform: scale(1.05); }
-
-    /* Generative backgrounds */
-    .project:nth-child(1) .project-bg {
-      background: radial-gradient(ellipse at 30% 70%, #c94e2f22 0%, transparent 60%),
-                  radial-gradient(ellipse at 70% 20%, #2b2d4244 0%, transparent 50%);
-    }
-    .project:nth-child(2) .project-bg {
-      background: radial-gradient(ellipse at 60% 40%, #c94e2f18 0%, transparent 60%),
-                  linear-gradient(135deg, #1e1e1e 0%, #141a16 100%);
-    }
-    .project:nth-child(3) .project-bg {
-      background: radial-gradient(ellipse at 40% 60%, #2b2d4255 0%, transparent 60%),
-                  radial-gradient(ellipse at 70% 30%, #c94e2f15 0%, transparent 50%);
-    }
-
-    .project-lines {
-      position: absolute; inset: 0;
-      opacity: 0.07;
-      background-image: repeating-linear-gradient(0deg, var(--paper) 0px, var(--paper) 1px, transparent 1px, transparent 40px);
-    }
-
-    .project-info {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      padding: 2rem;
-      background: linear-gradient(transparent, rgba(10,10,10,0.9));
-      transform: translateY(60%);
-      transition: transform 0.5s ease;
-    }
-    .project:hover .project-info { transform: translateY(0); }
-
-    .project-num {
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      color: var(--rust);
-      margin-bottom: 0.5rem;
-    }
-    .project-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.8rem;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.5rem;
-    }
-    .project-type {
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--fog);
-    }
-
-    .project-hover-tag {
-      position: absolute;
-      top: 1.5rem; right: 1.5rem;
-      font-size: 0.6rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--paper);
-      background: var(--rust);
-      padding: 0.3rem 0.7rem;
-      opacity: 0;
-      transform: translateY(-8px);
-      transition: opacity 0.3s, transform 0.3s;
-    }
-    .project:hover .project-hover-tag { opacity: 1; transform: translateY(0); }
-
-    /* ABOUT STRIP */
-    .about {
-      padding: 8rem 3rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8rem;
-      border-top: 1px solid rgba(240,236,227,0.08);
-    }
-    .about-left {}
-    .about-big {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(2.2rem, 4vw, 4rem);
-      line-height: 1.2;
-      color: var(--paper);
-      margin-bottom: 2rem;
-    }
-    .about-big em { font-style: italic; color: var(--rust); }
-
-    .about-right {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-    }
-    .about-body {
-      font-size: 0.72rem;
-      line-height: 2;
-      color: var(--fog);
-      margin-bottom: 3rem;
-    }
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      border-top: 1px solid rgba(240,236,227,0.1);
-      padding-top: 2.5rem;
-    }
-    .stat-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 3rem;
-      color: var(--rust);
-      line-height: 1;
-      margin-bottom: 0.3rem;
-    }
-    .stat-label {
-      font-size: 0.6rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--fog);
-    }
-
-    /* FOOTER */
-    footer {
-      padding: 5rem 3rem 3rem;
-      border-top: 1px solid rgba(240,236,227,0.08);
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-    }
-    .footer-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 4rem;
-      letter-spacing: 0.1em;
-      color: rgba(240,236,227,0.06);
-      line-height: 1;
-    }
-    .footer-right {
-      text-align: right;
-    }
-    .footer-contact {
-      font-family: 'DM Serif Display', serif;
-      font-style: italic;
-      font-size: 0.9rem;
-      color: var(--fog);
-      margin-bottom: 0.5rem;
-    }
-    .footer-email {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.4rem;
-      letter-spacing: 0.05em;
-      color: var(--rust);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .footer-email:hover { color: var(--paper); }
-    .footer-copy {
-      margin-top: 1rem;
-      font-size: 0.6rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(184,180,168,0.4);
-    }
-
-    /* ANIMATIONS */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes scaleIn {
-      from { opacity: 0; transform: scale(0.85); }
-      to   { opacity: 1; transform: scale(1); }
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    @keyframes ticker {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-
-    /* RESPONSIVE */
     @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; }
-      .hero-right { display: none; }
-      .projects { grid-template-columns: 1fr; }
-      .project:nth-child(2) { margin-top: 0; aspect-ratio: 3/4; }
-      .about { grid-template-columns: 1fr; gap: 3rem; }
-      nav { padding: 1.5rem 1.5rem; }
-      .hero { padding: 0 1.5rem; }
-      .work, .about { padding: 5rem 1.5rem; }
-      footer { padding: 3rem 1.5rem; flex-direction: column; align-items: flex-start; gap: 2rem; }
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      .countdown-bar { gap: 1.5rem; flex-wrap: wrap; padding: 2rem 1.5rem; }
+      .lineup, .location-section, .ticket-cta { padding: 5rem 1.5rem; }
+      .acts-grid { grid-template-columns: 1fr 1fr; }
+      .act-headliner { grid-column: span 2; }
+      .location-section { grid-template-columns: 1fr; gap: 3rem; }
+      .ticket-cta { flex-direction: column; gap: 3rem; margin: 0 1.5rem 5rem; }
+      .ticket-prices { align-items: flex-start; width: 100%; }
+      .price-card { min-width: unset; width: 100%; text-align: left; }
+      footer { flex-direction: column; gap: 2rem; text-align: center; padding: 3rem 1.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <div id="cursor"></div>
-
   <nav>
-    <div class="logo">VOID</div>
+    <div class="nav-logo">SOLSTICE</div>
     <ul class="nav-links">
-      <li><a href="#">Work</a></li>
-      <li><a href="#">Studio</a></li>
-      <li><a href="#">Process</a></li>
-      <li><a href="#">Contact</a></li>
+      <li><a href="#">Lineup</a></li>
+      <li><a href="#">Schedule</a></li>
+      <li><a href="#">Venue</a></li>
+      <li><a href="#">FAQ</a></li>
     </ul>
+    <button class="nav-btn">Get Tickets</button>
   </nav>
 
-  <!-- HERO -->
   <section class="hero">
-    <div class="hero-left">
-      <p class="hero-tag">Creative Direction — Est. 2019</p>
-      <h1 class="hero-title">
-        We make<br/>
-        <em>bold</em><br/>
-        things
-      </h1>
-      <p class="hero-sub">
-        A creative studio obsessed with the tension between order and chaos. 
-        We build brands, campaigns, and experiences that refuse to be ignored.
-      </p>
-      <a href="#work" class="hero-cta">
-        View Selected Work
-        <span>→</span>
-      </a>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <p class="hero-date">June 20–22, 2026</p>
+    <h1 class="hero-title">
+      <span class="line-1">SOLSTICE</span>
+      <span class="line-2">FEST</span>
+    </h1>
+    <div class="hero-sub-row">
+      <div class="divider"></div>
+      <p class="hero-location">Mojave Desert, <span>California</span></p>
+      <div class="divider"></div>
     </div>
-    <div class="hero-right">
-      <div class="hero-graphic">
-        <div class="circle-outer"></div>
-        <div class="circle-mid"></div>
-        <div class="circle-inner"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <span class="hero-num">VII</span>
+    <p class="hero-acts">Featuring 80+ Artists Across 5 Stages</p>
+    <div class="hero-actions">
+      <button class="btn-primary">Buy Tickets Now</button>
+      <button class="btn-secondary">View Lineup →</button>
+    </div>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <div class="countdown-bar">
+    <span class="countdown-label">Starts in</span>
+    <div class="cd-block"><span class="cd-num" id="cd-days">102</span><span class="cd-unit">Days</span></div>
+    <span class="cd-sep">:</span>
+    <div class="cd-block"><span class="cd-num" id="cd-hours">14</span><span class="cd-unit">Hours</span></div>
+    <span class="cd-sep">:</span>
+    <div class="cd-block"><span class="cd-num" id="cd-mins">37</span><span class="cd-unit">Mins</span></div>
+    <span class="cd-sep">:</span>
+    <div class="cd-block"><span class="cd-num" id="cd-secs">08</span><span class="cd-unit">Secs</span></div>
+  </div>
+
+  <section class="lineup" id="lineup">
+    <div class="section-header">
+      <div>
+        <p class="section-eyebrow">The Lineup</p>
+        <h2 class="section-title">Who's Playing</h2>
+      </div>
+      <div class="stage-tabs">
+        <button class="tab active">Main</button>
+        <button class="tab">Sands</button>
+        <button class="tab">Eclipse</button>
+      </div>
+    </div>
+    <div class="acts-grid">
+      <div class="act act-headliner">
+        <div class="headliner-tag">Headliner · Night 1</div>
+        <div class="act-time">10:00 PM – 12:30 AM</div>
+        <div class="act-name">NEON RIVERS</div>
+        <div class="act-genre">Electronic · Synth-Pop</div>
+      </div>
+      <div class="act act-headliner">
+        <div class="headliner-tag">Headliner · Night 2</div>
+        <div class="act-time">10:00 PM – 12:30 AM</div>
+        <div class="act-name">AURORA VALE</div>
+        <div class="act-genre">Indie Rock · Alternative</div>
+      </div>
+      <div class="act">
+        <div class="act-time">8:00 PM</div>
+        <div class="act-name">Glass Wolves</div>
+        <div class="act-genre">Post-Rock</div>
+      </div>
+      <div class="act">
+        <div class="act-time">7:00 PM</div>
+        <div class="act-name">SABLE</div>
+        <div class="act-genre">Ambient · Techno</div>
+      </div>
+      <div class="act">
+        <div class="act-time">6:00 PM</div>
+        <div class="act-name">The Drift</div>
+        <div class="act-genre">Dream Pop</div>
+      </div>
+      <div class="act">
+        <div class="act-time">5:00 PM</div>
+        <div class="act-name">Solace Bay</div>
+        <div class="act-genre">Folk · Acoustic</div>
       </div>
     </div>
   </section>
 
-  <!-- TICKER -->
-  <div class="ticker-wrap">
-    <div class="ticker">
-      <span>Brand Identity</span><span class="accent">✦</span>
-      <span>Art Direction</span><span class="accent">✦</span>
-      <span>Motion Design</span><span class="accent">✦</span>
-      <span>Digital Campaigns</span><span class="accent">✦</span>
-      <span>Editorial Design</span><span class="accent">✦</span>
-      <span>Brand Identity</span><span class="accent">✦</span>
-      <span>Art Direction</span><span class="accent">✦</span>
-      <span>Motion Design</span><span class="accent">✦</span>
-      <span>Digital Campaigns</span><span class="accent">✦</span>
-      <span>Editorial Design</span><span class="accent">✦</span>
+  <section class="location-section">
+    <div class="location-map">
+      <svg class="map-svg" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="80" x2="400" y2="80" stroke="#c8ff00" stroke-width="0.5" stroke-dasharray="4 8"/>
+        <line x1="0" y1="160" x2="400" y2="160" stroke="#c8ff00" stroke-width="0.5" stroke-dasharray="4 8"/>
+        <line x1="0" y1="240" x2="400" y2="240" stroke="#c8ff00" stroke-width="0.5" stroke-dasharray="4 8"/>
+        <line x1="0" y1="320" x2="400" y2="320" stroke="#c8ff00" stroke-width="0.5" stroke-dasharray="4 8"/>
+        <line x1="80" y1="0" x2="80" y2="400" stroke="#c8ff00" stroke-width="0.5" stroke-dasharray="4 8"/>
+        <line x1="160" y1="0" x2="160" y2="400" stroke="#c8ff00" stroke-width="0.5" stroke-dasharray="4 8"/>
+        <line x1="240" y1="0" x2="240" y2="400" stroke="#c8ff00" stroke-width="0.5" stroke-dasharray="4 8"/>
+        <line x1="320" y1="0" x2="320" y2="400" stroke="#c8ff00" stroke-width="0.5" stroke-dasharray="4 8"/>
+        <path d="M 0 200 Q 120 180 200 200 Q 280 220 400 200" stroke="#00d4ff" stroke-width="2" fill="none"/>
+        <path d="M 200 0 Q 190 120 200 200 Q 210 280 200 400" stroke="#00d4ff" stroke-width="2" fill="none"/>
+        <path d="M 0 280 L 150 280 L 200 200" stroke="#6b5f8a" stroke-width="1.5" fill="none"/>
+        <path d="M 400 120 L 260 150 L 200 200" stroke="#6b5f8a" stroke-width="1.5" fill="none"/>
+        <circle cx="80" cy="80" r="12" fill="none" stroke="#c8ff00" stroke-width="0.5"/>
+        <circle cx="320" cy="320" r="20" fill="none" stroke="#c8ff00" stroke-width="0.5"/>
+        <circle cx="320" cy="80" r="8" fill="none" stroke="#6b5f8a" stroke-width="0.5"/>
+      </svg>
+      <div class="map-pin"><div class="pin-dot"></div></div>
+      <div class="map-label">SOLSTICE GROUNDS</div>
+    </div>
+    <div class="location-info">
+      <p class="section-eyebrow">The Venue</p>
+      <h2 class="section-title">Mojave<br/>Desert, CA</h2>
+      <p class="location-detail">
+        Set against the raw beauty of the Mojave Desert, SOLSTICE transforms
+        <strong>900 acres of open terrain</strong> into the most immersive festival ground in the country.<br/><br/>
+        Just <strong>2 hours from Los Angeles</strong>, shuttle services run from major hubs.
+        On-site camping for all ticket tiers.
+      </p>
+      <div class="info-pills">
+        <span class="pill">🏕 On-Site Camping</span>
+        <span class="pill">🚌 Shuttle Service</span>
+        <span class="pill">🎨 Art Installations</span>
+        <span class="pill">🍜 Food Village</span>
+        <span class="pill">🛁 Luxury Glamping</span>
+        <span class="pill">🔥 Sunrise Ceremony</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticket-cta">
+    <div class="ticket-text">
+      <p class="section-eyebrow">Limited Availability</p>
+      <h2 class="ticket-title">Don't miss<br/><span>the moment</span></h2>
+    </div>
+    <div class="ticket-prices">
+      <div class="price-card">
+        <div class="price-tier">General Admission</div>
+        <div class="price-amount">$249</div>
+        <div class="price-desc">3-day access · GA camping</div>
+      </div>
+      <div class="price-card featured">
+        <div class="price-tier">✦ VIP Experience</div>
+        <div class="price-amount">$649</div>
+        <div class="price-desc">Front stage · Lounge · Glamping</div>
+      </div>
+      <button class="btn-primary" style="width:100%; padding: 1.1rem;">Secure Your Spot →</button>
     </div>
   </div>
 
-  <!-- WORK -->
-  <section class="work" id="work">
-    <div class="work-header">
-      <div>
-        <p class="section-label">Selected Work</p>
-        <h2 class="work-title">Recent <em>Projects</em></h2>
-      </div>
-      <a href="#" class="view-all">View All →</a>
-    </div>
-    <div class="projects">
-
-      <div class="project">
-        <div class="project-bg"></div>
-        <div class="project-lines"></div>
-        <span class="project-hover-tag">2025</span>
-        <div class="project-info">
-          <p class="project-num">001</p>
-          <h3 class="project-name">NOCTURNE</h3>
-          <p class="project-type">Brand Identity · Packaging</p>
-        </div>
-      </div>
-
-      <div class="project">
-        <div class="project-bg"></div>
-        <div class="project-lines"></div>
-        <span class="project-hover-tag">2024</span>
-        <div class="project-info">
-          <p class="project-num">002</p>
-          <h3 class="project-name">FORMA</h3>
-          <p class="project-type">Digital Campaign · Motion</p>
-        </div>
-      </div>
-
-      <div class="project">
-        <div class="project-bg"></div>
-        <div class="project-lines"></div>
-        <span class="project-hover-tag">2024</span>
-        <div class="project-info">
-          <p class="project-num">003</p>
-          <h3 class="project-name">MERIDIAN</h3>
-          <p class="project-type">Art Direction · Editorial</p>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section class="about">
-    <div class="about-left">
-      <p class="section-label">The Studio</p>
-      <h2 class="about-big">
-        Design that<br/>
-        <em>earns</em><br/>
-        attention
-      </h2>
-    </div>
-    <div class="about-right">
-      <p class="about-body">
-        We are a small, focused studio operating at the intersection of 
-        strategy and craft. Every project starts with a single question: 
-        what would make this impossible to ignore?<br/><br/>
-        We work with challengers, founders, and brands ready to move 
-        beyond the expected. Our process is direct. Our work is not.
-      </p>
-      <div class="stats">
-        <div>
-          <div class="stat-num">87</div>
-          <div class="stat-label">Projects shipped</div>
-        </div>
-        <div>
-          <div class="stat-num">31</div>
-          <div class="stat-label">Clients worldwide</div>
-        </div>
-        <div>
-          <div class="stat-num">6</div>
-          <div class="stat-label">Years running</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
   <footer>
-    <div class="footer-logo">VOID</div>
-    <div class="footer-right">
-      <p class="footer-contact">Ready to make something bold?</p>
-      <a href="mailto:hello@voidstudio.co" class="footer-email">hello@voidstudio.co</a>
-      <p class="footer-copy">© 2026 VOID Studio. All rights reserved.</p>
+    <div class="footer-brand">SOLSTICE <span>FEST</span></div>
+    <div class="footer-links">
+      <a href="#">Instagram</a>
+      <a href="#">Twitter</a>
+      <a href="#">Spotify</a>
+      <a href="#">Press</a>
     </div>
+    <span class="footer-copy">© 2026 Solstice Festival Inc.</span>
   </footer>
 
   <script>
-    // Custom cursor
-    const cursor = document.getElementById('cursor');
-    document.addEventListener('mousemove', e => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
-    });
-    document.querySelectorAll('a, .project').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('expand'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('expand'));
-    });
+    function updateCountdown() {
+      const target = new Date('2026-06-20T18:00:00');
+      const now = new Date();
+      const diff = target - now;
+      if (diff <= 0) return;
+      const days = Math.floor(diff / 86400000);
+      const hours = Math.floor((diff % 86400000) / 3600000);
+      const mins = Math.floor((diff % 3600000) / 60000);
+      const secs = Math.floor((diff % 60000) / 1000);
+      document.getElementById('cd-days').textContent = String(days).padStart(2,'0');
+      document.getElementById('cd-hours').textContent = String(hours).padStart(2,'0');
+      document.getElementById('cd-mins').textContent = String(mins).padStart(2,'0');
+      document.getElementById('cd-secs').textContent = String(secs).padStart(2,'0');
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
 
-    // Scroll-triggered fade-in for sections
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
       });
-    }, { threshold: 0.15 });
+    });
 
-    document.querySelectorAll('.project, .stat-num, .about-big').forEach(el => {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.act, .price-card, .location-map, .location-info').forEach(el => {
       el.style.opacity = '0';
-      el.style.transform = 'translateY(24px)';
-      el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
-      observer.observe(el);
+      el.style.transform = 'translateY(28px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      obs.observe(el);
     });
   </script>
 </body>
