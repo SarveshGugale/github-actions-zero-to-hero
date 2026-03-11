@@ -1,0 +1,6 @@
+services:
+   
+    web:
+      image: sarvesh01234/github-actions-app:latest
+      ports: 
+        - "80:80"
