@@ -3,4 +3,4 @@ services:
     web:
       image: sarvesh01234/app:latest
       ports: 
-        - "80:80"
+        - "8081:80"
