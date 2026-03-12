@@ -10,7 +10,7 @@ jobs:
         runs-on: ubuntu-latest 
         steps:
             
-            - name: Code checkout
+            - name: Code Checkout
               uses: actions/checkout@v4
 
             - name: Login to DockerHub
@@ -19,7 +19,7 @@ jobs:
                 username: ${{ secrets.DOCKERHUB_USER }}
                 password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-            - name: Build & push to Docker Hub
+            - name: Build & push to Docker_Hub
               uses: docker/build-push-action@v5
               with: 
                 context: .
