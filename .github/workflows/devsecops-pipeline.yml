@@ -1,8 +1,9 @@
 name: DevSecOps End to End Pipeline
 
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
+  # push:
+  #   branches: [main]
 
 jobs:
   code-quality:
@@ -26,4 +27,3 @@ jobs:
   trivy:
     needs: [build]
     uses: ./.github/workflows/image-scan.yml
-    
