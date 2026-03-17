@@ -2,10 +2,12 @@ name: Docker Build & push
 
 on:
     workflow_call:
-  #  push:
-  #      branches: [main]
-
-    
+      secrets:
+        DOCKERHUB_USER:
+          required: true
+        DOCKERHUB_TOKEN:
+          required: true
+   
 jobs:
     build-and-push:
         runs-on: ubuntu-latest 
